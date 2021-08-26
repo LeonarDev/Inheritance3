@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Inheritance3.Entities;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Inheritance3
 {
@@ -6,14 +9,30 @@ namespace Inheritance3
     {
         static void Main(string[] args)
         {
-            Account acc1 = new Account(1001, "Alex", 500.0);
-            Account acc2 = new SavingsAccount(1002, "Anna", 500.0, 0.01);
+            List<Account> accountList = new List<Account>();
 
-            acc1.Withdraw(10.0);
-            acc2.Withdraw(10.0);
+            accountList.Add(new SavingsAccount(1001, "Alex", 500.0, 0.01));
+            accountList.Add(new BusinessAccount(1001, "Maria", 500.0, 400.0));
+            accountList.Add(new SavingsAccount(1001, "Bob", 500.0, 0.01));
+            accountList.Add(new BusinessAccount(1001, "Anna", 500.0, 500.0));
 
-            Console.WriteLine(acc1.Balance);
-            Console.WriteLine(acc2.Balance);
+            double sum = 0.0;
+
+            foreach (Account account in accountList)
+            {
+                sum += account.Balance;
+            }
+            Console.WriteLine(sum);
+
+            foreach (Account account in accountList)
+            {
+                account.Withdraw(10.0);
+            }
+
+            foreach (Account account in accountList)
+            {
+                Console.WriteLine($"Update balance for account {account.Number}: {account.Balance.ToString("F2", CultureInfo.InvariantCulture)}");
+            }
         }
     }
 }
